@@ -41,7 +41,9 @@ class MicrosoftLoginPage {
         
         this.setUserLoginAndClick('sptestautomation@antongshortpoint.onmicrosoft.com')
         this.setUserPasswordAndClick('7310413Anton')
-        this.backButton.click()
+        if(this.askWindow.isDisplayed()) {
+            this.backButton.click()
+        }    
         
     }
 

@@ -5,21 +5,23 @@ const assert = require('assert');
 const expect = require('chai').expect;
 
 describe('My test for ShortPoint', () => {
+
+    beforeEach (() => browser.setTimeout({ 'implicit': 1000 }))
+
     it('login to SharePoint', () => {
         browser.url('https://antongshortpoint.sharepoint.com/sites/HomeSite');
-        browser.setTimeout({ 'implicit': 700 })
         sharePointHomePage.login()
         sharePointHomePage.startButtonClick()
         browser.switchWindow('https://antongshortpoint.sharepoint.com/sites/HomeSite/internalsite/testtask')
         expect(browser.getTitle()).to.equal('Test task - Home')    
     });
 
-    it('Slideshow is working', () => {
+    xit('Slideshow is working', () => {
         expect(sharePointTestPage.pictuersDisplayedVerify(['Picture 1', 'Picture 2', 'Picture 3', 'Picture 4'])).to.equal(true)
     });
 
-    xit('Verify that hover effects for each Tile are animated', () => {
-
+    it('Verify that hover effects for each Tile are animated', () => {
+        sharePointTestPage.tilesAnimationVerify()
     });
 
 });
