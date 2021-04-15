@@ -51,12 +51,23 @@ class SharePointTestPage {
     }
 
     get imageInsideTile () {
-        // return $$('div.shortpoint-tile-description')
+        return $$('div.shortpoint-tile-bg i')  //clik//IMAGES BEFORE: false,true,true,false
+                                                     //IMAGES AFTER: false,true,true,false
+        // return $$('div.shortpoint-tile-description')  //clik//IMAGES BEFORE: false,true,true,false
+                                                            //IMAGES AFTER: false,true,true,false
+
         // return $$('div.shortpoint-tile-bg-color')
-        // return $$('.shortpoint-tile-bg i')
-        // return $$('div.shortpoint-resize-keep-transition')
-        // return $$('div.shortpoint-tile-title-inner')
-        // return $$('div.shortpoint-tile-title-inner')
+        // return $$('div.shortpoint-resize-keep-transition')  //click//IMAGES BEFORE: true,true,false,false
+                                                                    //IMAGES AFTER: true,true,false,false
+        // return $$('div.shortpoint-tile-title-inner') //click//IMAGES BEFORE: true,true,false,false
+                                                            //IMAGES AFTER: true,true,false,false
+        // return $$('div.shortpoint-tile-bg') //clik//IMAGES BEFORE: false,true,true,false
+                                                //IMAGES AFTER: false,true,true,false
+        // return $$('div.shortpoint-tile-content')  //click//IMAGES BEFORE: true,true,false,false
+                                                        //IMAGES AFTER: true,true,false,false
+        // return $$('div.shortpoint-tile-title')
+        // return $$('shortpoint-tile-description-wrap')   //----
+        // return $$('shortpoint-tile-description')   //----
     }
 
     tilesAnimationVerify() {
@@ -70,12 +81,6 @@ class SharePointTestPage {
             this.tiles[count].moveTo()
             after.push(image.isDisplayed())
             --count
-            // for(let image of this.imageInsideTile) {
-            //     elem.moveTo()
-            //     if(image.isClickable()) {
-            //         flag = true
-            //     }
-            // }
         }
     console.log(`IMAGES BEFORE: ${before}`) 
     console.log(`IMAGES AFTER: ${after}`)    
