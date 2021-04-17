@@ -1,33 +1,27 @@
-const microsoftLoginPage = require('../page/microsoft.login.page.js')
+const MicrosoftLoginPage = require('../page/microsoft.login.page.js')
+const microsoftLoginPage = new MicrosoftLoginPage()
 
 class SharePointHomePage {
 
+    get startButton () { return $('a[data-shortpoint^="%22button"]') }
+    get homeButton () { return $('div[name="Home"]') }
 
-    get startButton () {
-        return $('a[data-shortpoint^="%22button"]')
-    }
-
-    get homeButton () {
-        return $('div[name="Home"]')
-    }
-
-
-    
-    startButtonClick () { 
-        browser.waitUntil(() => this.homeButton.isDisplayed())
-        if (!this.startButton.isDisplayed()) {
-            this.homeButton.click()
+    async startButtonClick () { 
+        await (await this.homeButton).waitForDisplayed({timeot: 5000})
+        if (!await (await this.startButton).isDisplayed()) {
+            await (await this.homeButton).click()
         }
-        browser.waitUntil(() => this.startButton.isDisplayed())
-        this.startButton.scrollIntoView()
-        this.startButton.click()
+        await (await this.startButton).waitForDisplayed({timeot: 5000})
+        await (await this.startButton).scrollIntoView()
+        await (await this.startButton).click()
     }
 
 
-    login () {
-        microsoftLoginPage.login()
+    async open (username, password) {
+        await browser.url('https://antongshortpoint.sharepoint.com/sites/HomeSite');
+        await microsoftLoginPage.open(username, password)
     }
 
 }
 
-module.exports = new SharePointHomePage()
+module.exports = SharePointHomePage

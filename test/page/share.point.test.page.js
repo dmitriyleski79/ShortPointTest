@@ -1,57 +1,43 @@
 class SharePointTestPage {
 
-    // get nextButton() {
-    //     return $('div[aria-live="polite"]+button')
-    // }
+    get slideshow () { return $$('div[data-shortpoint-type="image-carousel"]') }
+    get pictureOnPage () { return $$('div.sp-type-column') }
+    get visibleElem () { return $$('div[aria-hidden="false"]') }
+    get tiles () { return $$('div[data-shortpoint-type="tile"]') }
 
-    // get logo () {
-    //     return $('#spSiteHeader')
-    // }
-
-    get slideshow() {
-        return $$('div[data-shortpoint-type="image-carousel"]')
-    }
-
-    get pictureOnPage () {
-        return $$('div.sp-type-column')
-    }
-
-    get visibleElem () {
-        return $$('div[aria-hidden="false"]')
-    }
-
-
-    pictuersDisplayedVerify(needCheck) {
+    async pictuersDisplayedVerify(needCheck) {
         let result = []
-        browser.waitUntil(() => this.pictureOnPage[0].isDisplayed())
-        for (let elem of this.visibleElem) {
-            if (elem.isDisplayed()) {
-                result.push(elem.getText())
-                needCheck.splice(needCheck.indexOf(elem.getText()), 1) 
-            } else continue
+        await (await this.pictureOnPage)[0].waitForDisplayed({timeot: 5000})
+        for (let elem of await (await this.visibleElem)) {
+            if (await elem.isDisplayed()) {
+                result.push(await elem.getText())
+                needCheck.splice(needCheck.indexOf(await elem.getText()), 1) 
+            } else continue  
         }
         if (needCheck.length > 0) {
             for (let text of needCheck) {
-                browser.waitUntil(() => {
-                    let elem = this.slideshow.find(elem => elem.getText() == text && elem.isDisplayed())
-                    if(elem) {
-                        result.push(elem.getText())
-                        needCheck.splice(needCheck.indexOf(elem.getText()), 1)
-                    } 
-                    return elem   
-                })
+                let count = 7
+                for (let i = 0; i < count; i++) {
+                    let picture = await (await this.slideshow).find(async (elem) => await elem.getText() == text && await elem.isDisplayed())
+                    if(picture) {
+                        result.push(await picture.getText())
+                        needCheck.splice(needCheck.indexOf(await picture.getText()), 1)
+                        break
+                    } else { 
+                        await browser.pause(1000) 
+                    }
+                        
+                }   
             }
         } 
         if (needCheck.length == 0) return true
         else return false
     }
 
-    get tiles () {
-        return $$('div[data-shortpoint-type="tile"]')
-    }
 
-    get imageInsideTile () {
-        return $$('div.shortpoint-tile-bg i')  //clik//IMAGES BEFORE: false,true,true,false
+    get imageInsideTile () { return $$('div.shortpoint-tile-bg i') }
+
+        // return $$('div.shortpoint-tile-bg i')  //clik//IMAGES BEFORE: false,true,true,false
                                                      //IMAGES AFTER: false,true,true,false
         // return $$('div.shortpoint-tile-description')  //clik//IMAGES BEFORE: false,true,true,false
                                                             //IMAGES AFTER: false,true,true,false
@@ -68,18 +54,18 @@ class SharePointTestPage {
         // return $$('div.shortpoint-tile-title')
         // return $$('shortpoint-tile-description-wrap')   //----
         // return $$('shortpoint-tile-description')   //----
-    }
+    
 
-    tilesAnimationVerify() {
+    async tilesAnimationVerify() {
         let flag = false
         let before = []
         let after = []
-        this.pictureOnPage[1].scrollIntoView()
-        for(let image of this.imageInsideTile) {
-            let count = this.imageInsideTile.length-1
-            before.push(image.isDisplayed())
-            this.tiles[count].moveTo()
-            after.push(image.isDisplayed())
+        await (await this.pictureOnPage[1]).scrollIntoView()
+        for(let image of await (await this.imageInsideTile)) {
+            let count = await (await this.imageInsideTile).length-1
+            before.push(await image.isDisplayed())
+            await (await this.tiles[count]).moveTo()
+            after.push(await image.isDisplayed())
             --count
         }
     console.log(`IMAGES BEFORE: ${before}`) 
@@ -89,6 +75,4 @@ class SharePointTestPage {
 
 }   
 
-// div[aria-hidden="false"]
-
-module.exports = new SharePointTestPage()
+module.exports = SharePointTestPage

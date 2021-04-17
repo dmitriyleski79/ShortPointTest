@@ -1,52 +1,29 @@
 class MicrosoftLoginPage {
 
-    get loginField () {
-        return $('input#i0116')
-    }
-
-    setUserLoginAndClick(value) {
-        browser.waitUntil(() => this.loginField.isDisplayed())
-        this.loginField.addValue(value)
-        this.submitButton.click()
-    }
-
-    get passwordField () {
-        return $('#i0118')
-    }
-
-
-    setUserPasswordAndClick(value) {
-        browser.waitUntil(() => this.passwordField.isDisplayed())
-        this.passwordField.addValue(value)
-        this.submitButton.click()
-    }
-
-    get submitButton () {
-        return $('#idSIButton9')
-    }
-
-    get signedInLogo () {
-        return $('//div[.="Stay signed in?"]')
-    }
-
-    get askWindow () {
-        return $('.inner.fade-in-lightbox')
-    }
-
-    get backButton () {
-        return $('#idBtn_Back')
-    }
-
-    login () {
+    get loginField () { return $('input#i0116') }
+    get passwordField () { return $('#i0118') }
+    get submitButton () { return $('#idSIButton9') }
+    get signedInLogo () { return $('//div[.="Stay signed in?"]') }
+    get askWindow () { return $('.inner.fade-in-lightbox') }
         
-        this.setUserLoginAndClick('sptestautomation@antongshortpoint.onmicrosoft.com')
-        this.setUserPasswordAndClick('7310413Anton')
-        if(this.askWindow.isDisplayed()) {
-            this.backButton.click()
-        }    
-        
+    
+    async setUserLoginAndClick(value) {
+        await (await this.loginField).waitForDisplayed({timeot: 5000})
+        await (await this.loginField).addValue(value)
+        await (await this.submitButton).click()
     }
 
-}
+    async setUserPasswordAndClick(value) {
+        await (await this.passwordField).waitForDisplayed({timeot: 5000})
+        await (await this.passwordField).addValue(value)
+        await (await this.submitButton).click()
+    }
 
-module.exports = new MicrosoftLoginPage()
+    async open (username, password) {
+        await this.setUserLoginAndClick(username)
+        await this.setUserPasswordAndClick(password)
+        await (await this.submitButton).waitForDisplayed({timeot: 5000})
+        await (await this.submitButton).click()    
+    }
+} 
+module.exports = MicrosoftLoginPage
