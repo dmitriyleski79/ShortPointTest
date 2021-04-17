@@ -16,20 +16,16 @@ class SharePointTestPage {
         }
         if (needCheck.length > 0) {
             for (let text of needCheck) {
-                let count = 7
-                for (let i = 0; i < count; i++) {
-                    let picture = await (await this.slideshow).find(async (elem) => await elem.getText() == text && await elem.isDisplayed())
-                    if(picture) {
-                        result.push(await picture.getText())
-                        needCheck.splice(needCheck.indexOf(await picture.getText()), 1)
-                        break
-                    } else { 
-                        await browser.pause(1000) 
-                    }
-                        
-                }   
+                await browser.waitUntil(async () => {
+                    let elem = await this.slideshow.find(elem => elem.getText() == text && elem.isDisplayed())
+                    if(elem) {
+                        result.push(await (await elem).getText())
+                        needCheck.splice(needCheck.indexOf(await (await elem).getText()), 1)
+                    } 
+                    return elem   
+                })
             }
-        } 
+        }
         if (needCheck.length == 0) return true
         else return false
     }
