@@ -6,6 +6,7 @@ class SharePointHomePage {
     get startButton () { return $('a[data-shortpoint^="%22button"]') }
     get homeButton () { return $('div[name="Home"]') }
 
+    
     async startButtonClick () { 
         await (await this.homeButton).waitForDisplayed({timeot: 5000})
         if (!await (await this.startButton).isDisplayed()) {
@@ -16,12 +17,10 @@ class SharePointHomePage {
         await (await this.startButton).click()
     }
 
-
     async open (username, password) {
         await browser.url('https://antongshortpoint.sharepoint.com/sites/HomeSite');
         await microsoftLoginPage.open(username, password)
     }
-
 }
 
 module.exports = SharePointHomePage

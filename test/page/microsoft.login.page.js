@@ -5,7 +5,7 @@ class MicrosoftLoginPage {
     get submitButton () { return $('#idSIButton9') }
     get signedInLogo () { return $('//div[.="Stay signed in?"]') }
     get askWindow () { return $('.inner.fade-in-lightbox') }
-        
+         
     
     async setUserLoginAndClick(value) {
         await (await this.loginField).waitForDisplayed({timeot: 5000})
@@ -26,4 +26,5 @@ class MicrosoftLoginPage {
         await (await this.submitButton).click()    
     }
 } 
+
 module.exports = MicrosoftLoginPage

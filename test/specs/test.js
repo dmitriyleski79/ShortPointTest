@@ -3,7 +3,7 @@ const SharePointHomePage = require('../page/share.point.home.page.js');
 const sharePointHomePage = new SharePointHomePage()
 const SharePointTestPage = require('../page/share.point.test.page.js');
 const sharePointTestPage = new SharePointTestPage()
-const assert = require('assert');
+// const assert = require('assert');
 const expect = require('chai').expect;
 
 describe('My test for ShortPoint', () => {
@@ -20,8 +20,8 @@ describe('My test for ShortPoint', () => {
         expect(await sharePointTestPage.pictuersDisplayedVerify(['Picture 1', 'Picture 2', 'Picture 3', 'Picture 4'])).to.equal(true)
     });
 
-    xit('Verify that hover effects for each Tile are animated', async () => {
-        await harePointTestPage.tilesAnimationVerify()
+    it('Verify that hover effects for each Tile are animated', async () => {
+        expect(await sharePointTestPage.tilesAnimationVerify()).to.equal(true)
     });
 
 });
