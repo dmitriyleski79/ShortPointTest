@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dmitriyleski79/ShortPoint_task.git"
+    "url": "git+https://github.com/dmitriyleski79/task_Short_Point.git"
   },
   "author": "DmitriySm",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dmitriyleski79/ShortPoint_task/issues"
+    "url": "https://https://github.com/dmitriyleski79/task_Short_Point/issues"
   },
-  "homepage": "https://github.com/dmitriyleski79/ShortPoint_task#readme",
+  "homepage": "https://https://github.com/dmitriyleski79/task_Short_Point#readme",
   "devDependencies": {
     "@wdio/cli": "^7.3.1",
     "@wdio/local-runner": "^7.4.6",

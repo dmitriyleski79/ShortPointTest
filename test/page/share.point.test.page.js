@@ -50,7 +50,7 @@ class SharePointTestPage {
             after.push(before[count] != await dataOfTile(picture))
             ++count
         } 
-        return after.includes(false)  
+        return (!after.includes(false))  
     }    
 }   
 
