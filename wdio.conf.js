@@ -179,9 +179,14 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that are to be run
      */
-     before: function (capabilities, specs) {
-        browser.maximizeWindow();
+     before: async function (capabilities, specs) {
+        await browser.maximizeWindow();
     },
+     afterHook: async function (test) {
+        if (test.title.includes('after each')) {
+            await browser.maximizeWindow();
+        }
+    }
     /**
      * Gets executed before test execution begins. At this point you can access to all global
      * variables like `browser`. It is the perfect place to define custom commands.

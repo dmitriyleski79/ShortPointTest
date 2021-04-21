@@ -7,15 +7,17 @@ const expect = require('chai').expect;
 
 describe('My test for ShortPoint', () => {
 
-    // beforeEach(async () => {
-    //     await sharePointHomePage.open('sptestautomation@antongshortpoint.onmicrosoft.com', '7310413Anton')
-    //     await sharePointHomePage.startButtonClick()
-    //   });
-
-    it('login to SharePoint', async () => {
+    beforeEach(async () => {
         await sharePointHomePage.open('sptestautomation@antongshortpoint.onmicrosoft.com', '7310413Anton')
         await sharePointHomePage.startButtonClick()
         await browser.switchWindow('https://antongshortpoint.sharepoint.com/sites/HomeSite/internalsite/testtask')
+      });
+      
+    afterEach(async () => {
+        await browser.reloadSession()
+    })  
+
+    it('login to SharePoint', async () => {
         expect(await browser.getTitle()).to.equal('Test task - Home')  
     });
 
@@ -23,7 +25,7 @@ describe('My test for ShortPoint', () => {
         expect(await sharePointTestPage.pictuersDisplayedVerify()).to.equal(4)
     });
 
-    it('Verify that hover effects for each Tile are animated', async () => {
+    xit('Verify that hover effects for each Tile are animated', async () => {
         expect(await sharePointTestPage.tilesAnimationVerify()).to.equal(true)
     });
 
