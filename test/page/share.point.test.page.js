@@ -5,29 +5,39 @@ class SharePointTestPage {
     get visibleElem () { return $$('div[aria-hidden="false"]') }
     get tilesWithData () { return $$('div[data-shortpoint-type="tile"] [class*=transition]') }
     get tiles () { return $$('div[data-shortpoint-type="tile"]')}
+    get nextButton () {return $('.slick-next')}
 
-    
-    async pictuersDisplayedVerify(needCheck) {
-        await (await this.pictureOnPage)[0].waitForDisplayed({timeot: 5000})
+
+    async getData () {
+        const result = []
         for (let elem of await (await this.visibleElem)) {
-            if (await elem.isDisplayed()) {
-                needCheck.splice(needCheck.indexOf(await (await elem).getText()), 1) 
+            if (await elem.isDisplayed()) { 
+                result.push(await (await elem).getText())
             } else continue  
-        }
-        if (needCheck.length > 0) {
-            for (let text of needCheck) {
-                await browser.waitUntil(async () => {
-                    let elem = await this.slideshow.find(elem => elem.getText() == text && elem.isDisplayed())
-                    if(elem) {
-                        needCheck.splice(needCheck.indexOf(await (await elem).getText()), 1)
-                    } 
-                    return elem   
-                })
-            }
-        }
-        if (needCheck.length == 0) return true
-        else return false
+        }    
+    return result    
     }
+
+
+    async pictuersDisplayedVerify() {
+        await (await this.pictureOnPage)[0].waitForDisplayed({timeot: 5000})
+        let allresult = []
+        let result
+        do {
+            result = await this.getData()
+            for (let text of result){
+                if (allresult.includes(text)) continue
+                else {
+                    allresult.push(text)
+                    result.splice(result.indexOf(text), 1)
+                }    
+            }
+            await(await this.nextButton).click()
+            await browser.pause(600)
+        } while (result.length != 3)
+        return allresult.length
+    }    
+
 
     async tilesAnimationVerify() {
         await (await this.pictureOnPage)[1].waitForDisplayed({timeot: 5000})
