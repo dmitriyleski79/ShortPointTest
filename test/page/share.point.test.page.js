@@ -1,6 +1,5 @@
 class SharePointTestPage {
 
-    get slideshow () { return $$('div[data-shortpoint-type="image-carousel"]') }
     get pictureOnPage () { return $$('div.sp-type-column') }
     get visibleElem () { return $$('div[aria-hidden="false"]') }
     get tilesWithData () { return $$('div[data-shortpoint-type="tile"] [class*=transition]') }
@@ -21,8 +20,8 @@ class SharePointTestPage {
 
     async pictuersDisplayedVerify() {
         await (await this.pictureOnPage)[0].waitForDisplayed({timeot: 5000})
-        let allresult = []
-        let result
+        const allresult = []
+        let result = []
         do {
             result = await this.getData()
             for (let text of result){
