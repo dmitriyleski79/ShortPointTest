@@ -1,4 +1,3 @@
-
 const SharePointHomePage = require('../page/share.point.home.page.js');
 const SharePointTestPage = require('../page/share.point.test.page.js');
 const sharePointHomePage = new SharePointHomePage()
@@ -12,7 +11,7 @@ describe('My test for ShortPoint', () => {
         await sharePointHomePage.startButtonClick()
         await browser.switchWindow('https://antongshortpoint.sharepoint.com/sites/HomeSite/internalsite/testtask')
       });
-      
+
     afterEach(async () => {
         await browser.reloadSession()
     })  
@@ -25,9 +24,7 @@ describe('My test for ShortPoint', () => {
         expect(await sharePointTestPage.pictuersDisplayedVerify()).to.equal(4)
     });
 
-    xit('Verify that hover effects for each Tile are animated', async () => {
+    it('Verify that hover effects for each Tile are animated', async () => {
         expect(await sharePointTestPage.tilesAnimationVerify()).to.equal(true)
     });
-
 });
-

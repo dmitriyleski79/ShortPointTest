@@ -6,7 +6,6 @@ class SharePointTestPage {
     get tiles () { return $$('div[data-shortpoint-type="tile"]')}
     get nextButton () {return $('.slick-next')}
 
-
     async getData () {
         const result = []
         for (let elem of await (await this.visibleElem)) {
@@ -16,7 +15,6 @@ class SharePointTestPage {
         }    
     return result    
     }
-
 
     async pictuersDisplayedVerify() {
         await (await this.pictureOnPage)[0].waitForDisplayed({timeot: 5000})
@@ -36,7 +34,6 @@ class SharePointTestPage {
         } while (result.length != 3)
         return allresult.length
     }    
-
 
     async tilesAnimationVerify() {
         await (await this.pictureOnPage)[1].waitForDisplayed({timeot: 5000})
