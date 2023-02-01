@@ -1,4 +1,4 @@
-# short_point_task
+# shortPoint_task
 
 ## Content
 * general information
